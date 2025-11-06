@@ -20,7 +20,7 @@ if df is not None:
         prompt = f"""
         You are a data assistant. A user has a pandas dataframe named `df`:
 
-        {df.head(1000).to_string()}
+        {df.to_string()}
 
         Columns:
         {list(df.columns)}
