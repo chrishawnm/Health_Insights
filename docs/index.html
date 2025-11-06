@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Health Insights Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    .leftpane {
+      width: 65%;
+      border-right: 2px solid #ddd;
+    }
+    .rightpane {
+      width: 35%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tableau Dashboard -->
+  <div class="leftpane">
+    <iframe 
+      src="https://public.tableau.com/views/PatientHealth_17624105729400/Dashboard1?:showVizHome=no&:embed=true"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Streamlit App -->
+  <div class="rightpane">
+    <iframe 
+      src="https://healthinsights-z8ndwx47fkfqu8qwmnq7v5.streamlit.app/?embed=true">
+    </iframe>
+  </div>
+
+</body>
+</html>
