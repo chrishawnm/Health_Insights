@@ -9,7 +9,7 @@ st.title("Dashboard + OpenAI Query")
 CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/refs/heads/main/data2.csv"
 
 df = pd.read_csv(CSV_URL)
-st.dataframe(df.head())
+st.dataframe(df.dtypes())
 
 
 # Ask a question about the data
