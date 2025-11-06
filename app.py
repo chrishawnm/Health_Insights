@@ -1,10 +1,8 @@
-import os
-import pandas as pd
-import streamlit as st
 from openai import OpenAI
+import streamlit as st
+import pandas as pd
 
-# Initialize OpenAI client
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.title("Dashboard + OpenAI Query")
 
