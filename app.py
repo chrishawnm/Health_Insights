@@ -34,7 +34,7 @@ if df is not None:
         2) If needed, also provide Python code that uses pandas to compute the answer.
         """
 
-         response = client.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}]
         )
