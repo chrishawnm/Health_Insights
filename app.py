@@ -34,10 +34,10 @@ if df is not None:
         """
 
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}]
         )
-        
+            
         answer = response.choices[0].message.content  # ✅ THIS LINE
         st.write("Answer")
         st.write(answer)
