@@ -27,9 +27,10 @@ if df is not None:
 
         Question: {question}
 
-        Return:
-        1) A short and clear answer.
-        2) If needed, also provide Python code that uses pandas to compute the answer.
+      
+        return the actual result from the dataframe not just unique.
+        like if they ask for unique count sure provide unique count 
+        but if they ask for the unique list return the actual list and not just the code
         """
 
         response = client.chat.completions.create(
