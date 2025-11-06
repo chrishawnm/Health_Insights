@@ -31,6 +31,7 @@ if df is not None:
         return the actual result from the dataframe not just unique.
         like if they ask for unique count sure provide unique count 
         but if they ask for the unique list return the actual list and not just the code
+        dont describe anything just give the answer and that is it.
         """
 
         response = client.chat.completions.create(
