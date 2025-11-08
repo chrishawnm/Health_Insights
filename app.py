@@ -40,6 +40,6 @@ if df is not None:
         messages=[{"role": "user", "content": prompt}]
         )
             
-        answer = response.choices[0].message.content  # ✅ THIS LINE
+        answer = response.choices[0].message.content 
         st.write("Answer")
         st.write(answer)
