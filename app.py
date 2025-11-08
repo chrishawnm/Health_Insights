@@ -18,7 +18,7 @@ if df is not None:
     
     if st.button("Submit") and question.strip():
         prompt = f"""
-        You are a data assistant. A user has a pandas dataframe named `df`:
+        You are a data assistant. A user has a pandas dataframe named 'df':
 
         {df.head(1000).to_string()}
 
