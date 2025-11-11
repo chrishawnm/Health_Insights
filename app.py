@@ -1,7 +1,8 @@
 from openai import OpenAI
 import streamlit as st
 import pandas as pd
-#import google.generativeai as genai
+import google.generativeai as genai
+import re
 
 def question_query(question):
         prompt = f"""
@@ -35,6 +36,19 @@ def question_query(question):
             st.write("Answer:")
             st.write(answer)
 
+def question_validation(question):
+     
+    checks = [r"(?i)(union|insert|drop|delete|update|alter)", 
+            r"(?i)(ignore|previous|forget|disregard)",
+            r"(?i)(you are now|act as|pretend|prompt|role play|by pass)"]
+     
+    for case in checks:
+          if re.search(case, question):
+               return False
+    return True
+          
+
+
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 #genai.configure(api_key="")
 
@@ -50,11 +64,10 @@ st.dataframe(df.dtypes)
 if df is not None:
     st.subheader("Quick Questions")
     
-
-    if st.button("Most Common Disease"):
-        question_query("What is the most common disease in the data records?")
-    if st.button("Average Age of Person with Diabetes"):
-        question_query("What is the average age of a person with diabetes?")
-    if st.button("State with most conditions"):
-        question_query("What is the state with the most people with multiple conditions?")
-
+    question = st.text_input("Got a question about the dashboard board?:")
+    
+    if st.button("Submit") and question.strip():
+        if question_validation(question):
+            question_query(question)
+        else:
+            st.error("Try asking a different question")
