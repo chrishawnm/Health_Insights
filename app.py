@@ -57,14 +57,33 @@ st.title("Dashboard + OpenAI Query")
 CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/data2.csv"
 
 df = pd.read_csv(CSV_URL)
-st.dataframe(df.dtypes)
 
+#Dict to give user descriptions on possible data to query from
+column_descriptions = {
+    "condition" : "Patient's disease",
+    "county_name" : "The county of the state of the patient's origin",
+    "state_name" : "Patient's State of origin",
+    "race" : "Patient's Race or Ethnicity",
+    "sex_label" : "Male or Female",
+    "avg_age" : "Average age of person with that condition",
+    "cnt" : "Unique count of patients",
+}
+
+#making and printing dataframe to UI
+description_df = pd.DataFrame({
+    'Parameters': df.columns,
+    'Description' : [column_descriptions.get(column) for column in df.columns]
+})
+
+#st.dataframe(df.dtypes)
+st.subheader("Available Data")
+st.dataframe(description_df, hide_index=True)
 
 # Ask a question about the data
 if df is not None:
     st.subheader("Quick Questions")
     
-    question = st.text_input("Got a question about the dashboard board?:")
+    question = st.text_input("Got a question about the dashboard?:")
     
     if st.button("Submit") and question.strip():
         if question_validation(question):
