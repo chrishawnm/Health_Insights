@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import google.generativeai as genai
 import re
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 def question_query(question):
         prompt = f"""
@@ -58,6 +60,8 @@ CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/dat
 
 df = pd.read_csv(CSV_URL)
 
+tab1, tab2 = st.tabs(["Data Overview", "Visualizations"])
+
 #Dict to give user descriptions on possible data to query from
 column_descriptions = {
     "condition" : "Patient's disease",
@@ -75,18 +79,64 @@ description_df = pd.DataFrame({
     'Description' : [column_descriptions.get(column) for column in df.columns]
 })
 
-#st.dataframe(df.dtypes)
-st.subheader("Available Data")
-st.dataframe(description_df, hide_index=True)
+#tab for data overview
+with tab1:
+    #st.dataframe(df.dtypes)
+    st.subheader("Available Data")
+    st.dataframe(description_df, hide_index=True)
 
-# Ask a question about the data
-if df is not None:
-    st.subheader("Quick Questions")
-    
-    question = st.text_input("Got a question about the dashboard?:")
-    
-    if st.button("Submit") and question.strip():
-        if question_validation(question):
-            question_query(question)
-        else:
-            st.error("Try asking a different question")
+    # Ask a question about the data
+    if df is not None:
+        st.subheader("Quick Questions")
+        
+        question = st.text_input("Got a question about the dashboard?:")
+        
+        if st.button("Submit") and question.strip():
+            if question_validation(question):
+                question_query(question)
+            else:
+                st.error("Try asking a different question")
+
+#tab for basic data visualizations
+with tab2:
+    st.subheader("Data Visualizations")
+
+    col = st.selectbox("Select a data parameter for visualization:", df.columns)
+    visualization = st.selectbox("Choose a visualization:", ["Histogram", "Bar Chart", "Pie Chart"])
+
+    #using integers in histograms for now
+    if st.button("Generate Visualization"):
+        if df[col].dtype == 'int64':
+            if visualization == "Histogram":
+                fig, ax = plt.subplots(figsize=(10,5))
+
+                ax.set_title(f'Histogram for {col}')
+
+                sns.histplot(df[col], ax=ax)
+                st.pyplot(fig)
+            else:
+                st.error("Invalid visualization parameters")
+
+        #objects are categorical data
+        elif df[col].dtype == 'object':
+                if visualization == "Bar Chart":
+                    fig, ax = plt.subplots(figsize=(10, 5))
+
+                    ax.set_title(f'Counts in {col}')
+                    ax.set_xlabel(col)
+                    ax.set_ylabel('Count')
+
+                    df[col].value_counts().plot(kind='bar', ax=ax)
+
+                    st.pyplot(fig)
+                
+                elif visualization == "Pie Chart":
+                    fig, ax = plt.subplots(figsize=(8, 8))
+
+                    ax.set_title(f'Distribution of {col}')
+                    ax.pie(df[col].value_counts().values, labels=df[col].value_counts().index, autopct='%1.1f%%')
+
+                    st.pyplot(fig)
+                else:
+                    st.error("Invalid visualization parameters")
+
