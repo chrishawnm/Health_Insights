@@ -60,7 +60,7 @@ CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/dat
 
 df = pd.read_csv(CSV_URL)
 
-tab1, tab2 = st.tabs(["Data Overview", "Visualizations"])
+tab1, tab2= st.tabs(["Data Overview", "Visualizations"])
 
 #Dict to give user descriptions on possible data to query from
 column_descriptions = {
@@ -140,3 +140,32 @@ with tab2:
                 else:
                     st.error("Invalid visualization parameters")
 
+
+with st.sidebar:
+        st.title("Quick User Guide")
+
+        with st.expander("Getting Started", expanded=False):
+            st.write("""
+            Choose a page from above in order to explore available options within the application.
+                     
+            1. **Explore your data** in Data Overview
+            2. **Create visualizations** in Visualizations
+            
+            """)
+    
+        with st.expander("Data Overview", expanded=False):
+            st.write("""
+            This shows the available data and a descripton of each parameter than can be explored.
+                     
+            This data can also be queried via the quick questions option.
+            """)
+            
+        with st.expander("Visualizations", expanded=False):
+            st.write(""" 
+            Available Visulizations
+            
+            1. Histograms: Show data distribution for integer values
+            2. Bar Charts: Compare categories
+            3. Pie Charts: Visualize share of data
+                     
+            """)
