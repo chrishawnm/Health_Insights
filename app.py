@@ -79,6 +79,7 @@ with tab2:
                          
                      answer = response.choices[0].message.content 
                      st.write("Answer")
+                     st.write(answer)
             else:
                 st.error("Try asking a different question")
                 
