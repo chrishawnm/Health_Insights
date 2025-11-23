@@ -63,11 +63,13 @@ with tab2:
             Question: {question}
     
           
-            return the actual result from the dataframe not just unique.
+            1)return the actual result from the dataframe not just unique.
             like if they ask for unique count sure provide unique count 
             but if they ask for the unique list return the actual list 
             dont describe anything just give the value and that is it.
-            dont show them the code
+            
+            2) If needed, also provide Python code that uses pandas to compute the answer.
+
             """
             
             if question_validation(question):
