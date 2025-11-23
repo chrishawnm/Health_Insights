@@ -10,6 +10,8 @@ CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/dat
 
 df = pd.read_csv(CSV_URL)
 
+tab1, tab2= st.tabs(["Data Overview", "Visualizations"])
+
 
 #Dict to give user descriptions on possible data to query from
 column_descriptions = {
