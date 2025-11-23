@@ -10,7 +10,7 @@ CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/dat
 
 df = pd.read_csv(CSV_URL)
 
-tab1, tab2= st.tabs(["Data Overview", "Visualizations"])
+tab1, tab2= st.tabs(["Data Overview", "Questions"])
 
 
 #Dict to give user descriptions on possible data to query from
@@ -64,4 +64,4 @@ with tab2:
                 
             answer = response.choices[0].message.content 
             st.write("Answer")
-        st.write(answer)
+
