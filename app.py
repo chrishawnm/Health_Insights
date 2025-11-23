@@ -12,7 +12,17 @@ df = pd.read_csv(CSV_URL)
 
 tab1, tab2= st.tabs(["Data Overview", "Questions"])
 
-
+def question_validation(question):
+     
+    checks = [r"(?i)(union|insert|drop|delete|update|alter)", 
+            r"(?i)(ignore|previous|forget|disregard)",
+            r"(?i)(you are now|act as|pretend|prompt|role play|by pass)"]
+     
+    for case in checks:
+          if re.search(case, question):
+               return False
+    return True
+    
 #Dict to give user descriptions on possible data to query from
 column_descriptions = {
     "condition" : "Patient's disease",
@@ -37,6 +47,8 @@ with tab2:
     # Ask a question about the data
     if df is not None:
         question = st.text_input("Got a question about the dashboard board?:")
+
+            
         
         if st.button("Submit") and question.strip():
             prompt = f"""
@@ -56,14 +68,21 @@ with tab2:
             dont describe anything just give the value and that is it.
             dont show them the code
             """
-    
-            response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}]
-            )
+            
+            if question_validation(question):
+                with st.spinner("Processing..."):
+                response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": prompt}]
+                )
+                    
+                answer = response.choices[0].message.content 
+                st.write("Answer")
+            else:
+                st.error("Try asking a different question")
                 
-            answer = response.choices[0].message.content 
-            st.write("Answer")
+            
+            
             
 with st.sidebar:
         st.title("Quick User Guide")
