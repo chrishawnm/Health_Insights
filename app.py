@@ -2,14 +2,23 @@ from openai import OpenAI
 import streamlit as st
 import pandas as pd
 import re
+#we realized that chatgpt actually doesnt run their code through the dataframe
+#so we had to find a way to run the code on the df that we had and pandasai seem to do it for
+#us thus reducing hallucinations and giving accurate outputs
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# we then also realized that we may not need a prompt
+from pandasai import SmartDataframe
+from pandasai.llm import OpenAI as PandasAIOpenAI
+
+#client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+llm = PandasAIOpenAI(api_token=st.secrets["OPENAI_API_KEY"])
 
 st.title("Dashboard + OpenAI Query")
 
 CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/data2.csv"
 
 df = pd.read_csv(CSV_URL)
+llm_df = SmartDataframe(df, config={"llm": llm})
 
 tab1, tab2= st.tabs(["Data Overview", "Questions"])
 
@@ -52,34 +61,30 @@ with tab2:
             
         
         if st.button("Submit") and question.strip():
-            prompt = f"""
-            You are a data assistant. A user has a pandas dataframe named 'df':
+            # prompt = f"""
+            # You are a data assistant. A user has a pandas dataframe named 'df':
     
-            {df.head(1000).to_string()}
+            # {df.to_string()}
     
-            Columns:
-            {list(df.columns)}
+            # Columns:
+            # {list(df.columns)}
     
-            Question: {question}
+            # Question: {question}
     
           
-            # 1)return the actual result from the dataframe not just unique.
-            # like if they ask for unique count sure provide unique count 
-            # but if they ask for the unique list return the actual list 
-            # dont describe anything just give the value and that is it.
+            # # 1)return the actual result from the dataframe not just unique.
+            # # like if they ask for unique count sure provide unique count 
+            # # but if they ask for the unique list return the actual list 
+            # # dont describe anything just give the value and that is it.
             
-            2) If needed, also provide Python code that uses pandas to compute the answer.
+            # 2) If needed, also provide Python code that uses pandas to compute the answer.
 
-            """
+            # """
             
             if question_validation(question):
+                 
                 with st.spinner("Processing..."):
-                     response = client.chat.completions.create(
-                     model="gpt-4o-mini",
-                     messages=[{"role": "user", "content": prompt}]
-                     )
-                         
-                     answer = response.choices[0].message.content 
+                     answer = llm_df.query(question)
                      st.write("Answer")
                      st.write(answer)
             else:
