@@ -64,4 +64,32 @@ with tab2:
                 
             answer = response.choices[0].message.content 
             st.write("Answer")
+            
+with st.sidebar:
+        st.title("Quick User Guide")
 
+        with st.expander("Getting Started", expanded=False):
+            st.write("""
+            Choose a page from above in order to explore available options within the application.
+                     
+            1. **Explore your data** in Data Overview Tab
+            2. **Ask Questions** in Questions Tab
+            
+            """)
+    
+        with st.expander("Data Overview", expanded=False):
+            st.write("""
+            This shows the available data and a descripton of each parameter than can be explored.
+                     
+            This data can also be queried via the quick questions option.
+            """)
+            
+        with st.expander("Questions", expanded=False):
+            st.write(""" 
+            Available Questions
+            
+            1. Histograms: Show data distribution for integer values
+            2. Bar Charts: Compare categories
+            3. Pie Charts: Visualize share of data
+                     
+            """)
