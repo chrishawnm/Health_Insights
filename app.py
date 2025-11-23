@@ -71,13 +71,13 @@ with tab2:
             
             if question_validation(question):
                 with st.spinner("Processing..."):
-                response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": prompt}]
-                )
-                    
-                answer = response.choices[0].message.content 
-                st.write("Answer")
+                     response = client.chat.completions.create(
+                     model="gpt-4o-mini",
+                     messages=[{"role": "user", "content": prompt}]
+                     )
+                         
+                     answer = response.choices[0].message.content 
+                     st.write("Answer")
             else:
                 st.error("Try asking a different question")
                 
