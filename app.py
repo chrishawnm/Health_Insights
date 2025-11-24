@@ -7,18 +7,18 @@ import re
 #us thus reducing hallucinations and giving accurate outputs
 
 # we then also realized that we may not need a prompt
-from pandasai import SmartDataframe
-from pandasai.llm import OpenAI as PandasAIOpenAI
+# from pandasai import SmartDataframe
+# from pandasai.llm import OpenAI as PandasAIOpenAI
 
 #client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-llm = PandasAIOpenAI(api_token=st.secrets["OPENAI_API_KEY"])
+#llm = PandasAIOpenAI(api_token=st.secrets["OPENAI_API_KEY"])
 
 st.title("Dashboard + OpenAI Query")
 
 CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/data2.csv"
 
 df = pd.read_csv(CSV_URL)
-llm_df = SmartDataframe(df, config={"llm": llm})
+#llm_df = SmartDataframe(df, config={"llm": llm})
 
 tab1, tab2= st.tabs(["Data Overview", "Questions"])
 
@@ -84,7 +84,7 @@ with tab2:
             if question_validation(question):
                  
                 with st.spinner("Processing..."):
-                     answer = llm_df.query(question)
+                     #answer = llm_df.query(question)
                      st.write("Answer")
                      st.write(answer)
             else:
