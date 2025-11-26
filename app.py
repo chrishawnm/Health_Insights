@@ -46,39 +46,24 @@ with tab1:
     st.dataframe(description_df, hide_index=True)
 
 with tab2:
-    # Ask a question about the data
     if df is not None:
         question = st.text_input("Got a question about the dashboard board?:")
 
             
         
         if st.button("Submit") and question.strip():
-            # prompt = f"""
-            # You are a data assistant. A user has a pandas dataframe named 'df':
-    
-            # {df.to_string()}
-    
-            # Columns:
-            # {list(df.columns)}
-    
-            # Question: {question}
-    
-          
-            # # 1)return the actual result from the dataframe not just unique.
-            # # like if they ask for unique count sure provide unique count 
-            # # but if they ask for the unique list return the actual list 
-            # # dont describe anything just give the value and that is it.
-            
-            # 2) If needed, also provide Python code that uses pandas to compute the answer.
 
-            # """
             
             if question_validation(question):
                  
                 with st.spinner("Processing..."):
                      #answer = llm_df.query(question)
+                     llm = ChatOpenAI( model="gpt-3.5-turbo", temperature=0, api_key=st.secrets["OPENAI_API_KEY"] )
+
+                     agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True )
+                     response = agent.invoke(question)
                      st.write("Answer")
-                     st.write(answer)
+                     st.write(response['output'])
             else:
                 st.error("Try asking a different question")
                 
