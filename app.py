@@ -46,28 +46,30 @@ with tab1:
     st.dataframe(description_df, hide_index=True)
 
 with tab2:
-    if df is not None:
-        question = st.text_input("Got a question about the dashboard board?:")
 
-            
-        
-        if st.button("Submit") and question.strip():
 
+     col1, col2 = st.columns([3, 1])
+     question = st.text_input("Got a question about the dashboard board?:")
+
+       
+   
+     if st.button("Submit") and question.strip():
+     
             
-            if question_validation(question):
+          if question_validation(question):
                  
-                with st.spinner("Processing..."):
+               with st.spinner("Processing..."):
                      #answer = llm_df.query(question)
-                     llm = ChatOpenAI( model="gpt-3.5-turbo", temperature=0, api_key=st.secrets["OPENAI_API_KEY"] )
-
-                     agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True )
-                     response = agent.invoke(question)
-                     st.write("Answer")
-                     st.write(response['output'])
-            else:
-                st.error("Try asking a different question")
+                    llm = ChatOpenAI( model="gpt-3.5-turbo", temperature=0, api_key=st.secrets["OPENAI_API_KEY"] )
+     
+                    agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True )
+                    response = agent.invoke(question)
+                    st.write("Answer")
+                    st.write(response['output'])
+          else:
+               st.error("Try asking a different question")
                 
-            
+                 
             
             
 with st.sidebar:
