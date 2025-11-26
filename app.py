@@ -2,16 +2,8 @@ from openai import OpenAI
 import streamlit as st
 import pandas as pd
 import re
-#we realized that chatgpt actually doesnt run their code through the dataframe
-#so we had to find a way to run the code on the df that we had and pandasai seem to do it for
-#us thus reducing hallucinations and giving accurate outputs
-
-# we then also realized that we may not need a prompt
-# from pandasai import SmartDataframe
-# from pandasai.llm import OpenAI as PandasAIOpenAI
-
-#client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-#llm = PandasAIOpenAI(api_token=st.secrets["OPENAI_API_KEY"])
+from langchain_openai import ChatOpenAI
+from langchain_experimental.agents import create_pandas_dataframe_agent
 
 st.title("Dashboard + OpenAI Query")
 
