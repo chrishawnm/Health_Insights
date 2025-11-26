@@ -47,10 +47,13 @@ with tab1:
 
 with tab2:
 
-
      col1, col2 = st.columns([3, 1])
      question = st.text_input("Got a question about the dashboard board?:")
 
+     with col1:
+            question = st.text_input("Got a question about the dashboard?:")
+     with col2:
+            generate_chart = st.checkbox("Generate Chart", value=False)
        
    
      if st.button("Submit") and question.strip():
@@ -61,11 +64,19 @@ with tab2:
                with st.spinner("Processing..."):
                      #answer = llm_df.query(question)
                     llm = ChatOpenAI( model="gpt-3.5-turbo", temperature=0, api_key=st.secrets["OPENAI_API_KEY"] )
-     
+                    
+                   
+                         
                     agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True )
                     response = agent.invoke(question)
                     st.write("Answer")
                     st.write(response['output'])
+
+                    if generate_chart and os.path.exists("viz.png"):
+                            st.image("viz.png")
+                            os.remove("viz.png") 
+                    elif generate_chart:
+                            st.warning("The agent didn't generate a chart file. Try explicitly asking for a 'plot' in your text prompt.")
           else:
                st.error("Try asking a different question")
                 
