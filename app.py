@@ -88,8 +88,18 @@ with tab2:
                             st.warning("The agent didn't generate a chart file. Try explicitly asking for a 'plot' in your text prompt.")
           else:
                st.error("Try asking a different question")
-                
-                 
+    
+    st.markdown("---")
+    st.subheader("Common Questions")
+    
+    st.markdown("""
+    * *What are the top 5 states with the highest patient count?*
+    * *Show me the breakdown of patients by race for Diabetes. [Visualization]*
+    * *What is the average age for patients with Heart Failure?*
+    * *Compare the number of Male vs Female patients overall.*
+    * *Which county in California has the highest unique count?*
+    * *Plot the total number of patients per condition. [Visualization]*
+    """)            
             
             
 with st.sidebar:
