@@ -48,7 +48,6 @@ with tab1:
 with tab2:
 
      col1, col2 = st.columns([3, 1])
-     question = st.text_input("Got a question about the dashboard board?:")
 
      with col1:
             question = st.text_input("Got a question about the dashboard?:")
