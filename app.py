@@ -67,15 +67,14 @@ with tab2:
                     
                    
                          
-                    agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True )
+                    agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True , agent_type=AgentType.OPENAI_FUNCTIONS)
 
                     final_question = question
                     if generate_chart:
-                         final_question += ". If you plot data, save the figure as 'temp_chart.png' and do not show it interactively."
+                         final_question += ". If you plot data, save the figure as 'viz.png' and do not show it interactively."
 
                     response = agent.invoke(final_question)
                     
-                    response = agent.invoke(question)
                     st.write("Answer")
                     st.write(response['output'])
 
