@@ -67,7 +67,7 @@ with tab2:
                     
                    
                          
-                    agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True , agent_type=AgentType.OPENAI_FUNCTIONS)
+                    agent = create_pandas_dataframe_agent( llm,  df,  verbose=True, allow_dangerous_code=True, handle_parsing_errors=True )
 
                     final_question = question
                     if generate_chart:
