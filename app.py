@@ -114,7 +114,9 @@ with st.sidebar:
         with st.expander("Questions", expanded=False):
             st.write(""" 
             You can ask any more granular question pertaining to the dashboard (excluding condition matrix).
+            
             If you want a visual of your answer please click the check box (Generate Chart) and it will create a chart for you.
+            
             If you ask it to perform any change to the dataframe it will not and ask you to ask another question.
                      
             """)
