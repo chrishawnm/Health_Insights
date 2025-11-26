@@ -5,6 +5,9 @@ import pandas as pd
 import re
 from langchain_openai import ChatOpenAI
 from langchain_experimental.agents import create_pandas_dataframe_agent
+import matplotlib
+import seaborn
+import tabulate
 
 st.title("Dashboard + OpenAI Query")
 
