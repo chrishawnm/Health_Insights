@@ -108,15 +108,13 @@ with st.sidebar:
             st.write("""
             This shows the available data and a descripton of each parameter than can be explored.
                      
-            This data can also be queried via the quick questions option.
+            This data can be queried via the quick questions option.
             """)
             
         with st.expander("Questions", expanded=False):
             st.write(""" 
-            Available Questions
-            
-            1. Histograms: Show data distribution for integer values
-            2. Bar Charts: Compare categories
-            3. Pie Charts: Visualize share of data
+            You can ask any more granular question pertaining to the dashboard (excluding condition matrix).
+            If you want a visual of your answer please click the check box (Generate Chart) and it will create a chart for you.
+            If you ask it to perform any change to the dataframe it will not and ask you to ask another question.
                      
             """)
