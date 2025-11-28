@@ -3,21 +3,27 @@ from openai import OpenAI
 import streamlit as st
 import pandas as pd
 import re
+#these two libraries are for us to have chatgpt takes it own answer and apply it back to the dataframe we gave it
 from langchain_openai import ChatOpenAI
 from langchain_experimental.agents import create_pandas_dataframe_agent
+#these are the files we need to have the visualization work on streamlit so when you have a question it can actually create a visual using these libraries
 import matplotlib
 import seaborn
 import tabulate
 
 st.title("Dashboard + OpenAI Query")
 
+#this is where we are importing the dataframe and connecting it to the llm
 CSV_URL = "https://raw.githubusercontent.com/chrishawnm/Health_Insights/main/data2.csv"
 
 df = pd.read_csv(CSV_URL)
 #llm_df = SmartDataframe(df, config={"llm": llm})
 
+#this is the beginning of where we make the app more aesthestically pleasing
 tab1, tab2= st.tabs(["Data Overview", "Questions"])
 
+#this is how we stop bad actors from doing something we dont want it to do lik
+#deleted , ignore or pretend as examples 
 def question_validation(question):
      
     checks = [r"(?i)(union|insert|drop|delete|update|alter)", 
@@ -28,7 +34,7 @@ def question_validation(question):
           if re.search(case, question):
                return False
     return True
-    
+
 #Dict to give user descriptions on possible data to query from
 column_descriptions = {
     "condition" : "Patient's disease",
@@ -45,23 +51,32 @@ description_df = pd.DataFrame({
     'Parameters': df.columns,
     'Description' : [column_descriptions.get(column) for column in df.columns]
 })
+
 with tab1:
     st.subheader("Available Data")
     st.dataframe(description_df, hide_index=True)
 
+#this is the questions tab where most of our code is 
 with tab2:
 
      col1, col2 = st.columns([3, 1])
 
+     #this is just setting up our question text box and generate chart check box
      with col1:
             question = st.text_input("Got a question about the dashboard?:")
      with col2:
             generate_chart = st.checkbox("Generate Chart", value=False)
        
-   
+     #submit button
      if st.button("Submit") and question.strip():
      
-            
+          # so the questio first goes through the hack function to make sure its not a bad question
+          #then we run the llm and make it known of our dataframe
+          #then we take the question and if the generate chart button has been set to true then we add on a viz prompt
+          # then finally we have the llm agent read the final question 
+          #and in that it will also create a dataframe function that will then run it on the dataframe we gave it 
+          #then itll post the answer
+          # itll also generate a chart if the button is checked and the agent generated it
           if question_validation(question):
                  
                with st.spinner("Processing..."):
@@ -88,7 +103,8 @@ with tab2:
                             st.warning("The agent didn't generate a chart file. Try explicitly asking for a 'plot' in your text prompt.")
           else:
                st.error("Try asking a different question")
-    
+
+     #just wanted to add a common questions section for the user to know some questions they can ask if they are drawing a blank
      st.markdown("---")
      st.subheader("Common Questions")
     
@@ -101,7 +117,7 @@ with tab2:
      * *Plot the total number of patients per condition. [Visualization]*
      """)            
             
-            
+ #we added a sidebar because we wanted to be a bit organized and have people know what tabs are doing what and the intention and purpose of the app           
 with st.sidebar:
         st.title("Quick User Guide")
 
